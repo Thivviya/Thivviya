@@ -1,0 +1,132 @@
+code for load the image, take picture, save the image, share the image
+
+private void init() {
+        image = findViewById(R.id.image);
+        Gallery = findViewById(R.id.gallery);
+
+        //gallery
+
+        Gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //intent to pick image
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, IMAGE_PICK_CODE);
+            }
+        });
+
+        //camera
+
+        Camera = findViewById(R.id.camera);
+
+        // Request for camera permission
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, 100);
+        }
+
+        Camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //open camera
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, 100);
+            }
+        });
+
+        //save
+
+        Save = findViewById(R.id.save);
+
+        Save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BitmapDrawable drawable = (BitmapDrawable) image.getDrawable();
+                Bitmap bitmap = drawable.getBitmap();
+
+                File filepath = Environment.getExternalStorageDirectory();
+                File dir = new File(filepath.getAbsolutePath() + "/piceditor/");
+                dir.mkdir();
+                File file = new File(dir, System.currentTimeMillis()+".jpg");
+                try {
+                    outputStream = new FileOutputStream(file);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+                Toast.makeText(getApplicationContext(), "Successfully saved",Toast.LENGTH_SHORT).show();
+                try {
+                    outputStream.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        //Share the image
+
+        if(image.getDrawable() == null) {
+
+            Share = findViewById(R.id.share);
+
+            Share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//               //get an image from imageview
+                    Drawable drawable = image.getDrawable();
+                    Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+
+                    //sharing image
+                    try {
+                        File file = new File(MainActivity.this.getExternalCacheDir(), System.currentTimeMillis() + ".jpg");
+                        FileOutputStream fOut = new FileOutputStream(file);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fOut);
+                        fOut.flush();
+                        fOut.close();
+                        file.setReadable(true, false);
+
+                        //sharing intent
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(Environment.getExternalStorageDirectory().getPath()));
+                        intent.setType("image/jpg");
+                        startActivity(Intent.createChooser(intent, "Share via"));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                        Toast.makeText(MainActivity.this, "File not Found", Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+
+    }
+
+    //handle pick image
+
+    @Override
+    public void onActivityResult(int requestcode, int resultcode, Intent data) {
+        super.onActivityResult(requestcode, resultcode, data);
+        if (resultcode == RESULT_OK && requestcode == IMAGE_PICK_CODE) {
+            //set image to image view
+            image.setImageURI(data.getData());
+        }
+        //handle capture image
+        if(requestcode==100){
+            //get image
+            Bitmap captureImage = (Bitmap) data.getExtras().get("data");
+            // set to imageview
+            image.setImageBitmap(captureImage);
+        }
+
+    }
+
+}
