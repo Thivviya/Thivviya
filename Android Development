@@ -1,0 +1,46 @@
+code for Getting permission from user
+
+
+@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity);
+        init();
+    }
+
+    private static final int REQ_PERM = 5678;
+    private static final String[] PERM = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+
+    private static final int PERM_COUNT = 2;
+
+    private boolean notPermissions() {
+        for (int i = 0; i < PERM_COUNT; i++) {
+            if (checkSelfPermission(PERM[i]) != PackageManager.PERMISSION_GRANTED) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && notPermissions()) {
+            requestPermissions(PERM, REQ_PERM);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestcode, String[] permissions, int[] grantresults) {
+        super.onRequestPermissionsResult(requestcode, permissions, grantresults);
+        if (requestcode == REQ_PERM && grantresults.length > 0) {
+            if (notPermissions()) {
+                ((ActivityManager) this.getSystemService(ACCOUNT_SERVICE)).clearApplicationUserData();
+                recreate();
+            }
+        }
+    }
