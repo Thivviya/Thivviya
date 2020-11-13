@@ -1,0 +1,58 @@
+[
+  {
+    "_id": "5fa3a4be0150aca7e56a7040",
+    "Creator": "admin@leap.com",
+    "Tags": "Kids general Knowledge",
+    "Title": "GK for Kids",
+    "Owner": "admin@leap.com",
+    "Description": "GK for kids course covers MCQ",
+    "Category": "Competitive exam",
+    "Sub-category": "General Knowledge",
+    "Status": "Admin Approved"
+  },
+  {
+    "_id": "5fa3ad470150aca7e56a7041",
+    "Creator": "admin1@leap.com",
+    "Tags": "Python Basics",
+    "Title": "Python for Beginners",
+    "Owner": "admin1@leap.com",
+    "Description": "Python is an interpreted, object-oriented, high-level programming language with dynamic semantics. Its high-level built in data structures, combined with dynamic typing and dynamic binding, make it very attractive for Rapid Application Development, as well as for use as a scripting or glue language to connect existing components together.",
+    "Category": "Programming",
+    "Sub-category": "Learning",
+    "Status": "Admin Approved"
+  },
+  {
+    "_id": "5fa3ade30150aca7e56a7042",
+    "Creator": "admin2@leap.com",
+    "Tags": "Java Basics",
+    "Title": "Java for Beginners",
+    "Owner": "admin2@leap.com",
+    "Description": "Java is a high-level programming language developed by Sun Microsystems. It was originally designed for developing programs for set-top boxes and handheld devices, but later became a popular choice for creating web applications.",
+    "Category": "Programming",
+    "Sub-category": "Learning",
+    "Status": "Admin Approved"
+  },
+  {
+    "_id": "5fa3ea44d82da320c25919c1",
+    "Creator": "admin3@leap.com",
+    "Tags": "C Basics",
+    "Title": "C for Beginners",
+    "Owner": "admin3@leap.com",
+    "Description": "C is a general-purpose, high-level language that was originally developed by Dennis M. Ritchie to develop the UNIX operating system at Bell Labs.",
+    "Category": "Programming",
+    "Sub-category": "Learning",
+    "Status": "Admin Approved"
+  },
+  {
+    "_id": "5fa3ea9bd82da320c25919c2",
+    "Creator": "admin4@leap.com",
+    "Tags": "C++ Basics",
+    "Title": "C++ for Beginners",
+    "Owner": "admin4@leap.com",
+    "Description": "C++ is a cross-platform language that can be used to create high-performance applications. C++ was developed by Bjarne Stroustrup, as an extension to the C language. ",
+    "Category": "Programming",
+    "Sub-category": "Learning",
+    "Status": "Admin Approved"
+  }
+]
+
